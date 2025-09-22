@@ -1,0 +1,12 @@
+[project]
+name = "findresearchpapers"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "black>=25.9.0",
+    "pre-commit>=4.3.0",
+    "pyright>=1.1.405",
+    "ruff>=0.13.1",
+]
