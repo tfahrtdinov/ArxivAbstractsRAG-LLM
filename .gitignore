@@ -7,6 +7,7 @@ __pycache__/
 .pyright/
 
 # Data & indices
+docker_volumes/
 data/
 index/
 *.parquet
@@ -18,4 +19,5 @@ index/
 
 # Virtual env
 .venv/
+.env
 

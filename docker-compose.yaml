@@ -1,0 +1,13 @@
+services:
+  pgvector:
+    image: pgvector/pgvector:0.7.4-pg16
+    container_name: pgvector
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-papers}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker_volumes/pgvector:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
