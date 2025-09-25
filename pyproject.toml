@@ -12,7 +12,6 @@ dependencies = [
     "langchain-core>=0.3.76",
     "langchain-openai>=0.3.33",
     "langchain-postgres>=0.0.15",
-    "notebook>=7.4.5",
     "pre-commit>=4.3.0",
     "psycopg[binary]>=3.2.10",
     "pydantic>=2.11.9",
