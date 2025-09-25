@@ -14,7 +14,7 @@ load_dotenv()
 
 @lru_cache
 def get_settings() -> Settings:
-    return Settings()
+    return Settings()  # type: ignore
 
 
 @lru_cache(maxsize=1)
@@ -24,7 +24,7 @@ def get_retriver() -> BaseRetriever:
         connection=settings.POSTGRES_CONNECTOR,
         collection_name=settings.VECTOR_STORE_COLLECTION_NAME,
         embeddings=OpenAIEmbeddings(
-            model=settings.EMBEDDING_MODEL, openai_api_key=settings.OPENAI_API_KEY
+            model=settings.EMBEDDING_MODEL
         ),
     )
     return vectorstore.as_retriever(search_kwargs={"k": 5})
