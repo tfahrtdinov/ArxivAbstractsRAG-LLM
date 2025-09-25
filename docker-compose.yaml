@@ -11,3 +11,12 @@ services:
     volumes:
       - ./docker_volumes/pgvector:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  fastapi:
+    container_name: llm-fastapi
+    build: .
+    env_file: .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - pgvector

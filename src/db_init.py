@@ -1,21 +1,15 @@
 import logging
 from typing import Iterable, List
-from dotenv import load_dotenv
 
 import pyarrow.parquet as pq
-from langchain_postgres import PGVector
-from langchain_openai import OpenAIEmbeddings
 from langchain_core.documents import Document
 
-from src.dependencies import get_settings
+from src.dependencies import get_vectorstore
 
 
-# todo: remove dotenv, add whole-app logger
-load_dotenv()
 logger = logging.getLogger(__name__)
 
-
-# todo: это будет в докере, нужно будет указать путь относительно докера
+# NOTE: This file isn't supposed to be a part of an app. For the fastapi with llm, I'm assuming you already have vectors in DB
 PARQUET_FILE_PATH = "../data/abstracts.parquet"
 
 
@@ -40,12 +34,7 @@ def split_documents(document: Iterable[Document]) -> None:
 
 def encode_docs() -> None:
     parquet_file = pq.ParquetFile(PARQUET_FILE_PATH)
-    settings = get_settings()
-    store = PGVector(
-        connection=settings.POSTGRES_CONNECTOR,
-        collection_name=settings.VECTOR_STORE_COLLECTION_NAME,
-        embeddings=OpenAIEmbeddings(model=settings.EMBEDDING_MODEL),
-    )
+    store = get_vectorstore()
     for docs in documents_generator(parquet_file):
         store.add_documents(docs, ids=[doc.id for doc in docs])
 
