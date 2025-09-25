@@ -1,4 +1,3 @@
-import os
 import logging
 from typing import Iterable, List
 from dotenv import load_dotenv
@@ -8,13 +7,16 @@ from langchain_postgres import PGVector
 from langchain_openai import OpenAIEmbeddings
 from langchain_core.documents import Document
 
+from src.dependencies import get_settings
 
+
+# todo: remove dotenv, add whole-app logger
 load_dotenv()
 logger = logging.getLogger(__name__)
 
 
-PARQUET_FILE_PATH = "./data/abstracts.parquet"
-POSTGRES_CONNECTOR = os.getenv("POSTGRES_CONNECTOR")
+# todo: это будет в докере, нужно будет указать путь относительно докера
+PARQUET_FILE_PATH = "../data/abstracts.parquet"
 
 
 def documents_generator(parq_file: pq.ParquetFile) -> Iterable[List[Document]]:
@@ -38,10 +40,11 @@ def split_documents(document: Iterable[Document]) -> None:
 
 def encode_docs() -> None:
     parquet_file = pq.ParquetFile(PARQUET_FILE_PATH)
+    settings = get_settings()
     store = PGVector(
-        connection=POSTGRES_CONNECTOR,
-        collection_name="arxiv_abstracts",
-        embeddings=OpenAIEmbeddings(),
+        connection=settings.POSTGRES_CONNECTOR,
+        collection_name=settings.VECTOR_STORE_COLLECTION_NAME,
+        embeddings=OpenAIEmbeddings(model=settings.EMBEDDING_MODEL),
     )
     for docs in documents_generator(parquet_file):
         store.add_documents(docs, ids=[doc.id for doc in docs])
