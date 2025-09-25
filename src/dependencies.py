@@ -26,9 +26,7 @@ def get_vectorstore() -> PGVector:
     vectorstore = PGVector(
         connection=settings.POSTGRES_CONNECTOR,
         collection_name=settings.VECTOR_STORE_COLLECTION_NAME,
-        embeddings=OpenAIEmbeddings(
-            model=settings.EMBEDDING_MODEL
-        ),
+        embeddings=OpenAIEmbeddings(model=settings.EMBEDDING_MODEL),
     )
     return vectorstore
 

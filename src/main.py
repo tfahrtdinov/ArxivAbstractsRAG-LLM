@@ -12,6 +12,6 @@ async def lifespan(fastapi_app: FastAPI):
         raise RuntimeError("Database size is 0")
     yield
 
+
 app = FastAPI(lifespan=lifespan)
 app.include_router(ask.router, prefix="/ask", tags=["ask"])
-
