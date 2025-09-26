@@ -17,7 +17,9 @@ def get_settings() -> Settings:
 @lru_cache()
 def get_db_size() -> int:
     settings = get_settings()
-    db = SQLDatabase.from_uri(settings.POSTGRES_CONNECTOR.format(HOST=settings.POSTGRES_HOST))
+    db = SQLDatabase.from_uri(
+        settings.POSTGRES_CONNECTOR.format(HOST=settings.POSTGRES_HOST)
+    )
     return int(db.run("SELECT COUNT(*) FROM langchain_pg_embedding;").strip("[](), "))
 
 

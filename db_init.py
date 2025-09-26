@@ -42,7 +42,9 @@ def encode_docs() -> None:
     parquet_file = pq.ParquetFile(PARQUET_FILE_PATH)
 
     store = PGVector(
-        connection=os.getenv("POSTGRES_CONNECTOR").format(HOST=os.getenv("POSTGRES_HOST")),
+        connection=os.getenv("POSTGRES_CONNECTOR").format(
+            HOST=os.getenv("POSTGRES_HOST")
+        ),
         collection_name=os.getenv("VECTOR_STORE_COLLECTION_NAME"),
         embeddings=OpenAIEmbeddings(model=EMBEDDING_MODEL),
     )
