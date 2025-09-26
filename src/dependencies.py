@@ -16,15 +16,17 @@ def get_settings() -> Settings:
 
 @lru_cache()
 def get_db_size() -> int:
-    db = SQLDatabase.from_uri(get_settings().POSTGRES_CONNECTOR)
+    settings = get_settings()
+    db = SQLDatabase.from_uri(settings.POSTGRES_CONNECTOR.format(HOST=settings.POSTGRES_HOST))
     return int(db.run("SELECT COUNT(*) FROM langchain_pg_embedding;").strip("[](), "))
 
 
 @lru_cache
 def get_vectorstore() -> PGVector:
     settings = get_settings()
+
     vectorstore = PGVector(
-        connection=settings.POSTGRES_CONNECTOR,
+        connection=settings.POSTGRES_CONNECTOR.format(HOST=settings.POSTGRES_HOST),
         collection_name=settings.VECTOR_STORE_COLLECTION_NAME,
         embeddings=OpenAIEmbeddings(model=settings.EMBEDDING_MODEL),
     )
