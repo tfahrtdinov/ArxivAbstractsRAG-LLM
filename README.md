@@ -16,6 +16,31 @@ This project relies on the **[arXiv Abstracts 2021 dataset](https://huggingface.
   - `abstract`  
 - Used here as the source collection for semantic search and RAG-based question answering
 
+## Configuration
+
+The project expects a `.env` file in the root directory.  
+This file defines all environment variables required by the application.
+
+At minimum, you must set your **OpenAI API key** (`OPENAI_API_KEY`) since the application relies heavily on the OpenAI API.
+
+Example `.env`:
+
+```env
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_DB=papers
+POSTGRES_HOST=localhost
+POSTGRES_CONNECTOR=postgresql+psycopg://postgres:postgres@{HOST}:5432/papers
+
+VECTOR_STORE_COLLECTION_NAME=arxiv_abstracts
+
+OPENAI_API_KEY=your_openai_key
+
+EMBEDDING_MODEL=text-embedding-3-small
+RETRIEVER_MODEL=gpt-5-nano
+MAIN_MODEL=gpt-5-nano
+
+
 ## Installation
 
 ### 1. Start Postgres and populate the database
@@ -47,3 +72,4 @@ uv run db_init.py
 docker compose up -d --build fastapi
 ```
 The service will then be available at http://localhost:8000.
+
