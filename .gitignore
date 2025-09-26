@@ -1,5 +1,6 @@
-# IDE configs
+# IDE configs and OS
 .idea/
+.DS_Store
 
 # Caches
 __pycache__/
