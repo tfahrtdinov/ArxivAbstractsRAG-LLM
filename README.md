@@ -39,7 +39,7 @@ OPENAI_API_KEY=your_openai_key
 EMBEDDING_MODEL=text-embedding-3-small
 RETRIEVER_MODEL=gpt-5-nano
 MAIN_MODEL=gpt-5-nano
-
+```
 
 ## Installation
 
@@ -72,4 +72,5 @@ uv run db_init.py
 docker compose up -d --build fastapi
 ```
 The service will then be available at http://localhost:8000.
+
 
